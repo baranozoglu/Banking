@@ -6,16 +6,16 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Customer {
+public class Account {
     private Long id;
-    private String name;
-    private String surname;
-    private Long phone;
-    private String email;
+    private Long customerId;
+    private String country;
+    private List<Balance> balances;
     private Date createdAt;
 }

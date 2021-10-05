@@ -1,5 +1,6 @@
 package com.tuum.banking.model;
 
+import com.tuum.banking.dto.enums.DirectionEnum;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,11 +12,12 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Customer {
+public class Transaction {
     private Long id;
-    private String name;
-    private String surname;
-    private Long phone;
-    private String email;
+    private Long accountId;
+    private Double amount;
+    private DirectionEnum direction;
+    private String description;
+    private Double balanceAfterTransaction;
     private Date createdAt;
 }
