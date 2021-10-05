@@ -25,7 +25,7 @@ CREATE TABLE accounts (
 CREATE TABLE balances (
                           id SERIAL PRIMARY KEY,
                           account_id int NOT NULL REFERENCES accounts,
-                          availableAmount NUMERIC (50, 2) NOT NULL,
+                          available_amount NUMERIC (50, 2) NOT NULL,
                           currency NUMERIC NOT NULL,
                           created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
@@ -36,6 +36,6 @@ CREATE TABLE transactions (
                               amount NUMERIC (50, 2) NOT NULL,
                               direction NUMERIC NOT NULL,
                               description VARCHAR ( 250 ) NOT NULL,
-                              balanceAfterTransaction NUMERIC (50, 2) NOT NULL,
+                              balance_after_transaction NUMERIC (50, 2) NOT NULL,
                               created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
