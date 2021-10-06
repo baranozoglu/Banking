@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TransactionRequest {
-    private Long id = null;
+    private Long id;
     private Long accountId;
     private Double amount;
     private String currency;

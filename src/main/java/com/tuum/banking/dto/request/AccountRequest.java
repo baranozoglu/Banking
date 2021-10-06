@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class AccountRequest {
-    private Long id = null;
+    private Long id;
     private Long customerId;
     private String country;
     private List<CurrencyEnum> currencyList;
