@@ -1,10 +1,8 @@
 package com.tuum.banking.mapper;
 
+import com.tuum.banking.dto.enums.CurrencyEnum;
 import com.tuum.banking.model.Balance;
-import com.tuum.banking.model.Customer;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -12,15 +10,29 @@ import java.util.List;
 public interface BalanceMapper {
 
     @Select("SELECT * FROM balances where id = #{id}")
+    @Results(value={
+            @Result(property="id", column ="id" ),
+            @Result(property="accountId", column ="account_id"),
+            @Result(property="availableAmount", column ="available_amount"),
+            @Result(property="currency", column ="currency"),
+            @Result(property="createdAt", column ="created_at"),
+    })
     Balance findById(@Param("id") Long id);
 
     @Select("SELECT * FROM balances where account_id = #{id}")
+    @Results(value={
+            @Result(property="id", column ="id" ),
+            @Result(property="accountId", column ="account_id"),
+            @Result(property="availableAmount", column ="available_amount"),
+            @Result(property="currency", column ="currency"),
+            @Result(property="createdAt", column ="created_at"),
+    })
     List<Balance> findByAccountId(@Param("id") Long id);
 
     @Select("INSERT INTO balances (account_id, available_amount, currency) VALUES (#{accountId}, #{availableAmount}, #{currency}) RETURNING id")
     Long addBalance(Balance balance);
 
-    @Select("UPDATE balances SET account_id=#{accountId}, available_amount =#{availableAmount}, currency =#{currency} WHERE id =#{id} RETURNING id")
+    @Select("UPDATE balances SET account_id=#{accountId}, available_amount =#{availableAmount}, currency =#{currency}, updated_at =#{updatedAt} WHERE id =#{id} RETURNING id")
     Long updateBalance(Balance balance);
 
     @Select("DELETE FROM balances WHERE id =#{id} RETURNING id")

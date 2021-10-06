@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -14,8 +14,14 @@ import java.util.List;
 @AllArgsConstructor
 public class Account {
     private Long id;
+    private Customer customer;
     private Long customerId;
     private String country;
     private List<Balance> balances;
-    private Date createdAt;
+    private LocalDateTime updatedAt;
+    private LocalDateTime createdAt;
+
+    public Account(Long id) {
+        this.id = id;
+    }
 }

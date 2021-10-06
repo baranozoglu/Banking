@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Data
@@ -17,5 +18,16 @@ public class Balance {
     private Long accountId;
     private Double availableAmount;
     private CurrencyEnum currency;
-    private Date createdAt;
+    private LocalDateTime updatedAt;
+    private LocalDateTime createdAt;
+
+    public Balance(Long id) {
+        this.id = id;
+    }
+
+    public Balance(Long accountId, Double availableAmount, CurrencyEnum currency) {
+        this.accountId = accountId;
+        this.availableAmount = availableAmount;
+        this.currency = currency;
+    }
 }

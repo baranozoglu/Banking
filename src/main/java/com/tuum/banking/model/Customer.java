@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 @Builder
@@ -17,5 +17,10 @@ public class Customer {
     private String surname;
     private Long phone;
     private String email;
-    private Date createdAt;
+    private LocalDateTime updatedAt;
+    private LocalDateTime createdAt;
+
+    public Customer(Long id) {
+        this.id = id;
+    }
 }

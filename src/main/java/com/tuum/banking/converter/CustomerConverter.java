@@ -14,7 +14,9 @@ public class CustomerConverter {
                 .name(entity.getName())
                 .surname(entity.getSurname())
                 .email(entity.getEmail())
-                .created_at(entity.getCreatedAt())
+                .phone(entity.getPhone())
+                .updatedAt(entity.getUpdatedAt())
+                .createdAt(entity.getCreatedAt())
                 .build();
     }
 

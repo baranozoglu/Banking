@@ -7,6 +7,15 @@ import org.apache.ibatis.annotations.*;
 public interface CustomerMapper {
 
     @Select("SELECT * FROM customers where id = #{id}")
+    @Results(value={
+            @Result(property="id", column ="id" ),
+            @Result(property="name", column ="name"),
+            @Result(property="surname", column ="surname"),
+            @Result(property="email", column ="email"),
+            @Result(property="phone", column ="phone"),
+            @Result(property="createdAt", column ="created_at"),
+            @Result(property="updatedAt", column ="updated_at"),
+    })
     Customer findById(@Param("id") Long id);
 
     @Select("INSERT INTO customers (name, surname, email, phone) VALUES (#{name}, #{surname}, #{email}, #{phone}) RETURNING id")

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CustomerRequest {
-    private Long id;
+    private Long id = null;
     private String name;
     private String surname;
     private Long phone;
