@@ -26,6 +26,11 @@ public class TransactionController {
         return transactionService.addTransaction(request);
     }
 
+    @PostMapping("/rabbit")
+    public void addTransactionRabbit(@RequestBody TransactionRequest request) {
+        transactionService.transactionStart(request);
+    }
+
     @DeleteMapping("/{id}")
     public TransactionResponse deleteTransaction(@PathVariable(value="id") Long id) {
         return transactionService.deleteTransaction(id);

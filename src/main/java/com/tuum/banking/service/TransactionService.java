@@ -10,7 +10,12 @@ import com.tuum.banking.mapper.TransactionMapper;
 import com.tuum.banking.model.Balance;
 import com.tuum.banking.model.Transaction;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
@@ -26,6 +31,13 @@ public class TransactionService {
     final private AccountService accountService;
     final private TransactionConverter transactionConverter;
 
+    private final DirectExchange exchange;
+    private final AmqpTemplate rabbitTemplate;
+    @Value("${sample.rabbitmq.routingKey1}")
+    String routingKey1;
+    @Value("${sample.rabbitmq.queue1}")
+    String queueName1;
+
     public List<TransactionResponse> getTransactionByAccountId(Long id) {
         accountService.getAccount(id);
         final List<Transaction> transactionList = transactionMapper.findByAccountId(id);
@@ -37,6 +49,7 @@ public class TransactionService {
         return transactionResponseList;
     }
 
+    @Transactional
     public TransactionResponse addTransaction(TransactionRequest request) throws ResponseStatusException {
         if(!Objects.nonNull(request.getDescription())) {
             throw new DescriptionMissingException();
@@ -80,14 +93,13 @@ public class TransactionService {
     public Balance getBalance(Long accountId, String requestCurrency) {
         final List<Balance> accountBalanceList = balanceService.getBalanceByAccountId(accountId);
 
-        final Balance accountBalance = accountBalanceList.stream().filter(f -> {
+        return accountBalanceList.stream().filter(f -> {
             final CurrencyEnum currency = CurrencyEnum.of(requestCurrency);
             if(Objects.equals(CurrencyEnum.OTHER, currency)) {
                 throw new InvalidCurrencyException();
             }
             return Objects.equals(f.getCurrency(), currency);
         }).findFirst().orElse(null);
-        return accountBalance;
     }
 
     public TransactionResponse deleteTransaction(Long id) {
@@ -99,6 +111,15 @@ public class TransactionService {
         } catch (Exception e) {
             throw new GeneralException();
         }
+    }
+
+    public void transactionStart(TransactionRequest request) {
+        rabbitTemplate.convertAndSend(exchange.getName(), routingKey1, request);
+    }
+
+    @RabbitListener(queues = "${sample.rabbitmq.queue1}")
+    public TransactionResponse callAddTransaction(TransactionRequest request) {
+        return addTransaction(request);
     }
 
 }
