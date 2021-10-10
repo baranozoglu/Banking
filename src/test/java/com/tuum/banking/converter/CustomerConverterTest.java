@@ -3,16 +3,12 @@ package com.tuum.banking.converter;
 import com.tuum.banking.dto.request.CustomerRequest;
 import com.tuum.banking.dto.response.CustomerResponse;
 import com.tuum.banking.model.Customer;
-import org.junit.Before;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CustomerConverterTest {

@@ -41,14 +41,7 @@ public class TransactionService {
         if(!Objects.nonNull(request.getDescription())) {
             throw new DescriptionMissingException();
         }
-        final List<Balance> accountBalanceList = balanceService.getBalanceByAccountId(request.getAccountId());
-        final Balance accountBalance = accountBalanceList.stream().filter(f -> {
-            final CurrencyEnum currency = CurrencyEnum.of(request.getCurrency());
-            if(Objects.equals(CurrencyEnum.OTHER, currency)) {
-                throw new InvalidCurrencyException();
-            }
-            return Objects.equals(f.getCurrency(), currency);
-        }).findFirst().orElse(null);
+        final Balance accountBalance = getBalance(request.getAccountId(), request.getCurrency());
 
         final Double balanceAfterTransaction = checkBalance(accountBalance, DirectionEnum.of(request.getDirection()), request.getAmount());
 
@@ -61,7 +54,7 @@ public class TransactionService {
         return transactionConverter.entityToResponse(transaction);
     }
 
-    private Double checkBalance(Balance balance, DirectionEnum direction, Double amount) {
+    public Double checkBalance(Balance balance, DirectionEnum direction, Double amount) {
         if(!Objects.nonNull(balance)) {
             throw new NotFoundException();
         }
@@ -82,6 +75,19 @@ public class TransactionService {
             balanceAfterTransaction = balance.getAvailableAmount() - amount;
         }
         return balanceAfterTransaction;
+    }
+
+    public Balance getBalance(Long accountId, String requestCurrency) {
+        final List<Balance> accountBalanceList = balanceService.getBalanceByAccountId(accountId);
+
+        final Balance accountBalance = accountBalanceList.stream().filter(f -> {
+            final CurrencyEnum currency = CurrencyEnum.of(requestCurrency);
+            if(Objects.equals(CurrencyEnum.OTHER, currency)) {
+                throw new InvalidCurrencyException();
+            }
+            return Objects.equals(f.getCurrency(), currency);
+        }).findFirst().orElse(null);
+        return accountBalance;
     }
 
     public TransactionResponse deleteTransaction(Long id) {

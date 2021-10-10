@@ -2,18 +2,13 @@ package com.tuum.banking.converter;
 
 import com.tuum.banking.dto.enums.CurrencyEnum;
 import com.tuum.banking.dto.enums.DirectionEnum;
-import com.tuum.banking.dto.request.CustomerRequest;
 import com.tuum.banking.dto.request.TransactionRequest;
-import com.tuum.banking.dto.response.CustomerResponse;
 import com.tuum.banking.dto.response.TransactionResponse;
 import com.tuum.banking.model.Balance;
-import com.tuum.banking.model.Customer;
 import com.tuum.banking.model.Transaction;
-import org.junit.Before;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.junit.Assert.assertEquals;
@@ -30,8 +25,8 @@ public class TransactionConverterTest {
                 .id(1L)
                 .accountId(1L)
                 .amount(Double.valueOf(10))
-                .direction("IN")
-                .currency("EUR")
+                .direction(DirectionEnum.IN.name())
+                .currency(CurrencyEnum.EUR.name())
                 .description("hi thats test description")
                 .build();
 
@@ -51,18 +46,21 @@ public class TransactionConverterTest {
         assertEquals(transaction.getAmount(), request.getAmount());
         assertEquals(transaction.getDescription(), request.getDescription());
         assertEquals(transaction.getCurrency(), CurrencyEnum.of(request.getCurrency()));
-        assertEquals(transaction.getDirection(), CurrencyEnum.of(request.getDirection()));
+        assertEquals(transaction.getDirection(), DirectionEnum.of(request.getDirection()));
 
     }
 
     @Test
     public void shouldSuccessfullyConvertEntityToResponse() {
+        final Double balanceAfterTransaction = Double.valueOf(110);
+
         final Transaction transaction = Transaction.builder()
                 .id(1L)
                 .accountId(1L)
                 .amount(Double.valueOf(10))
                 .direction(DirectionEnum.IN)
                 .currency(CurrencyEnum.EUR)
+                .balanceAfterTransaction(balanceAfterTransaction)
                 .description("hi thats test description")
                 .build();
 
@@ -73,7 +71,6 @@ public class TransactionConverterTest {
                 .currency(CurrencyEnum.EUR)
                 .build();
 
-        final Double balanceAfterTransaction = Double.valueOf(110);
 
         final TransactionResponse response = converter.entityToResponse(transaction);
         assertEquals(response.getAccountId(), transaction.getAccountId());

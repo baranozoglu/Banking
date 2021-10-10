@@ -2,17 +2,13 @@ package com.tuum.banking.converter;
 
 import com.tuum.banking.dto.enums.CurrencyEnum;
 import com.tuum.banking.dto.request.AccountRequest;
-import com.tuum.banking.dto.request.CustomerRequest;
 import com.tuum.banking.dto.response.AccountResponse;
-import com.tuum.banking.dto.response.CustomerResponse;
 import com.tuum.banking.model.Account;
 import com.tuum.banking.model.Balance;
 import com.tuum.banking.model.Customer;
-import org.junit.Before;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
@@ -48,7 +44,7 @@ public class AccountConverterTest {
         assertEquals(account.getId(), request.getId());
         assertEquals(account.getBalances(), balanceList);
         assertEquals(account.getCountry(), request.getCountry());
-        assertEquals(account.getCustomer().getId(), request.getCustomerId());
+        assertEquals(account.getCustomerId(), request.getCustomerId());
     }
 
     @Test
@@ -65,6 +61,7 @@ public class AccountConverterTest {
         final Account account = Account.builder()
                 .id(1L)
                 .country("ankara")
+                .customer(new Customer(1L))
                 .customerId(1L)
                 .balances(balanceList)
                 .build();
@@ -72,6 +69,7 @@ public class AccountConverterTest {
         final AccountResponse response = converter.entityToResponse(account);
         assertEquals(account.getBalances(), balanceList);
         assertEquals(account.getId(), response.getAccountId());
-        assertEquals(account.getCustomer().getId(), response.getCustomerId());
+        assertEquals(account.getCustomerId(), response.getCustomerId());
+        assertEquals(account.getCustomer(), response.getCustomer());
     }
 }
