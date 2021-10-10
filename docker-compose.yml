@@ -1,0 +1,26 @@
+version: "3.9"
+
+services:
+  rabbitmq-host:
+    image: rabbitmq
+    networks:
+      - banking-network
+  postgres-host:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_DB: banking
+    volumes:
+      - ./schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    networks:
+      - banking-network
+  banking:
+    image: banking
+    networks:
+      - banking-network
+    ports:
+    - "8080:8080"
+
+networks:
+  banking-network:
