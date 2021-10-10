@@ -2,7 +2,6 @@ package com.tuum.banking.controller;
 
 import com.tuum.banking.dto.request.CustomerRequest;
 import com.tuum.banking.dto.response.CustomerResponse;
-import com.tuum.banking.model.Customer;
 import com.tuum.banking.service.CustomerService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;

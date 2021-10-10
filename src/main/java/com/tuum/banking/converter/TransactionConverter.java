@@ -4,8 +4,8 @@ import com.tuum.banking.dto.enums.CurrencyEnum;
 import com.tuum.banking.dto.enums.DirectionEnum;
 import com.tuum.banking.dto.request.TransactionRequest;
 import com.tuum.banking.dto.response.TransactionResponse;
-import com.tuum.banking.model.Transaction;
 import com.tuum.banking.model.Balance;
+import com.tuum.banking.model.Transaction;
 import org.springframework.stereotype.Component;
 
 @Component

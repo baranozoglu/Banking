@@ -5,7 +5,6 @@ import com.tuum.banking.dto.enums.CurrencyEnum;
 import com.tuum.banking.dto.request.AccountRequest;
 import com.tuum.banking.dto.response.AccountResponse;
 import com.tuum.banking.exception.InvalidAccountException;
-import com.tuum.banking.exception.NotFoundException;
 import com.tuum.banking.mapper.AccountMapper;
 import com.tuum.banking.model.Account;
 import com.tuum.banking.model.Balance;

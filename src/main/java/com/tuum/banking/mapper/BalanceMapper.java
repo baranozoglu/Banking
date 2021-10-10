@@ -1,6 +1,5 @@
 package com.tuum.banking.mapper;
 
-import com.tuum.banking.dto.enums.CurrencyEnum;
 import com.tuum.banking.model.Balance;
 import org.apache.ibatis.annotations.*;
 
