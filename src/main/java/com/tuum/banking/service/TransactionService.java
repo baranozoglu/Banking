@@ -68,7 +68,7 @@ public class TransactionService {
         return transactionConverter.entityToResponse(transaction);
     }
 
-    public BigDecimal checkBalance(Balance balance, DirectionEnum direction, BigDecimal amount) {
+    private BigDecimal checkBalance(Balance balance, DirectionEnum direction, BigDecimal amount) {
         if(!Objects.nonNull(balance)) {
             throw new NotFoundException();
         }
@@ -91,7 +91,7 @@ public class TransactionService {
         return balanceAfterTransaction;
     }
 
-    public Balance getBalance(Long accountId, String requestCurrency) {
+    private Balance getBalance(Long accountId, String requestCurrency) {
         final List<Balance> accountBalanceList = balanceService.getBalanceByAccountId(accountId);
 
         return accountBalanceList.stream().filter(f -> {
