@@ -102,7 +102,6 @@ public class AccountServiceTest {
 
     @Test
     public void should_addAccount_Successfully() {
-        final Long accountId = 1L;
         List<CurrencyEnum> currencyEnumList = new ArrayList<>();
         currencyEnumList.add(CurrencyEnum.EUR);
         currencyEnumList.add(CurrencyEnum.GBP);

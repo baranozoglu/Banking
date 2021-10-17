@@ -66,14 +66,6 @@ public class TransactionConverterTest {
                 .description("hi thats test description")
                 .build();
 
-        final Balance balance = Balance.builder()
-                .id(1L)
-                .accountId(1L)
-                .availableAmount(BigDecimal.valueOf(100))
-                .currency(CurrencyEnum.EUR)
-                .build();
-
-
         final TransactionResponse response = converter.entityToResponse(transaction);
         assertEquals(response.getAccountId(), transaction.getAccountId());
         assertEquals(response.getBalanceAfterTransaction(), balanceAfterTransaction);

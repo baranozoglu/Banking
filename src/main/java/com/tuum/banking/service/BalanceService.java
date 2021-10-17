@@ -61,25 +61,4 @@ public class BalanceService {
         }
     }
 
-    public Balance getBalance(Long id) {
-        try {
-            final Balance balance = balanceMapper.findById(id);
-            return balanceMapper.findById(id);
-        } catch (Exception e) {
-            throw new GeneralException();
-        }
-    }
-
-    public Balance deleteBalance(Long id) {
-        try {
-            Long _id = balanceMapper.deleteBalance(id);
-            return Balance.builder()
-                    .id(_id)
-                    .build();
-        } catch (Exception e) {
-            throw new GeneralException();
-        }
-    }
-
-
 }
