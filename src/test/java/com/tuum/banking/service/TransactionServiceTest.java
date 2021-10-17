@@ -16,6 +16,7 @@ import org.mockito.Mock;
 import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,12 +42,12 @@ public class TransactionServiceTest {
     public void should_getTransaction_Successfully() {
         final Long transactionId = 1L;
         final Long accountId = 1L;
-        final Double balanceAfterTransaction = Double.valueOf(110);
+        final BigDecimal balanceAfterTransaction = BigDecimal.valueOf(110);
 
         final Transaction entity = Transaction.builder()
                 .id(1L)
                 .accountId(1L)
-                .amount(Double.valueOf(10))
+                .amount(BigDecimal.TEN)
                 .direction(DirectionEnum.IN)
                 .currency(CurrencyEnum.EUR)
                 .balanceAfterTransaction(balanceAfterTransaction)
@@ -56,7 +57,7 @@ public class TransactionServiceTest {
         final TransactionResponse response = TransactionResponse.builder()
                 .transactionId(1L)
                 .accountId(1L)
-                .amount(Double.valueOf(10))
+                .amount(BigDecimal.TEN)
                 .direction(DirectionEnum.IN)
                 .currency(CurrencyEnum.EUR)
                 .description("hi thats test description")
@@ -83,12 +84,12 @@ public class TransactionServiceTest {
     public void should_getTransaction_ThrowNotFoundException() {
         final Long transactionId = 1L;
         final Long accountId = 1L;
-        final Double balanceAfterTransaction = Double.valueOf(110);
+        final BigDecimal balanceAfterTransaction = BigDecimal.valueOf(110);
 
         final Transaction entity = Transaction.builder()
                 .id(1L)
                 .accountId(1L)
-                .amount(Double.valueOf(10))
+                .amount(BigDecimal.TEN)
                 .direction(DirectionEnum.IN)
                 .currency(CurrencyEnum.EUR)
                 .balanceAfterTransaction(balanceAfterTransaction)
@@ -98,7 +99,7 @@ public class TransactionServiceTest {
         final TransactionResponse response = TransactionResponse.builder()
                 .transactionId(1L)
                 .accountId(1L)
-                .amount(Double.valueOf(10))
+                .amount(BigDecimal.TEN)
                 .direction(DirectionEnum.IN)
                 .currency(CurrencyEnum.EUR)
                 .description("hi thats test description")
@@ -123,13 +124,13 @@ public class TransactionServiceTest {
 
     @Test
     public void should_addTransaction_Successfully() {
-        final Double balanceAfterTransaction = Double.valueOf(110);
+        final BigDecimal balanceAfterTransaction = BigDecimal.valueOf(110);
         final Long accountId = 1L;
 
         final Transaction entity = Transaction.builder()
                 .id(1L)
                 .accountId(1L)
-                .amount(Double.valueOf(10))
+                .amount(BigDecimal.TEN)
                 .direction(DirectionEnum.IN)
                 .currency(CurrencyEnum.EUR)
                 .balanceAfterTransaction(balanceAfterTransaction)
@@ -138,7 +139,7 @@ public class TransactionServiceTest {
 
         final TransactionRequest request = TransactionRequest.builder()
                 .accountId(1L)
-                .amount(Double.valueOf(10))
+                .amount(BigDecimal.TEN)
                 .direction(DirectionEnum.IN.name())
                 .currency(CurrencyEnum.EUR.name())
                 .description("hi thats test description")
@@ -147,7 +148,7 @@ public class TransactionServiceTest {
         final TransactionResponse response = TransactionResponse.builder()
                 .transactionId(1L)
                 .accountId(1L)
-                .amount(Double.valueOf(10))
+                .amount(BigDecimal.TEN)
                 .direction(DirectionEnum.IN)
                 .currency(CurrencyEnum.EUR)
                 .balanceAfterTransaction(balanceAfterTransaction)
@@ -156,7 +157,7 @@ public class TransactionServiceTest {
         final Balance balance = Balance.builder()
                 .id(1L)
                 .accountId(1L)
-                .availableAmount(Double.valueOf(150))
+                .availableAmount(BigDecimal.valueOf(150))
                 .currency(CurrencyEnum.EUR)
                 .build();
 
@@ -167,7 +168,7 @@ public class TransactionServiceTest {
 
         when(balanceService.getBalanceByAccountId(anyLong())).thenReturn(balanceList);
         when(balanceService.updateBalance(any(Balance.class))).thenReturn(balance);
-        when(transactionConverter.requestToEntity(any(TransactionRequest.class), any(Balance.class), anyDouble())).thenReturn(entity);
+        when(transactionConverter.requestToEntity(any(TransactionRequest.class), any(Balance.class), any())).thenReturn(entity);
         when(transactionMapper.addTransaction(any(Transaction.class))).thenReturn(1L);
         when(transactionMapper.findById(anyLong())).thenReturn(entity);
         when(transactionConverter.entityToResponse(any(Transaction.class))).thenReturn(response);
@@ -184,13 +185,13 @@ public class TransactionServiceTest {
 
     @Test(expected = NotFoundException.class)
     public void should_addTransaction_NotFoundException() {
-        final Double balanceAfterTransaction = Double.valueOf(110);
+        final BigDecimal balanceAfterTransaction = BigDecimal.valueOf(110);
         final Long accountId = 1L;
 
         final Transaction entity = Transaction.builder()
                 .id(1L)
                 .accountId(1L)
-                .amount(Double.valueOf(10))
+                .amount(BigDecimal.TEN)
                 .direction(DirectionEnum.IN)
                 .currency(CurrencyEnum.EUR)
                 .balanceAfterTransaction(balanceAfterTransaction)
@@ -199,7 +200,7 @@ public class TransactionServiceTest {
 
         final TransactionRequest request = TransactionRequest.builder()
                 .accountId(1L)
-                .amount(Double.valueOf(10))
+                .amount(BigDecimal.TEN)
                 .direction(DirectionEnum.IN.name())
                 .currency(CurrencyEnum.EUR.name())
                 .description("hi thats test description")
@@ -208,7 +209,7 @@ public class TransactionServiceTest {
         final TransactionResponse response = TransactionResponse.builder()
                 .transactionId(1L)
                 .accountId(1L)
-                .amount(Double.valueOf(10))
+                .amount(BigDecimal.TEN)
                 .direction(DirectionEnum.IN)
                 .currency(CurrencyEnum.EUR)
                 .balanceAfterTransaction(balanceAfterTransaction)
@@ -217,7 +218,7 @@ public class TransactionServiceTest {
         final Balance balance = Balance.builder()
                 .id(1L)
                 .accountId(1L)
-                .availableAmount(Double.valueOf(150))
+                .availableAmount(BigDecimal.valueOf(150))
                 .currency(CurrencyEnum.EUR)
                 .build();
 
@@ -227,7 +228,7 @@ public class TransactionServiceTest {
 
         when(balanceService.getBalanceByAccountId(anyLong())).thenReturn(balanceList);
         when(balanceService.updateBalance(any(Balance.class))).thenReturn(balance);
-        when(transactionConverter.requestToEntity(any(TransactionRequest.class), any(Balance.class), anyDouble())).thenReturn(entity);
+        when(transactionConverter.requestToEntity(any(TransactionRequest.class), any(Balance.class), any())).thenReturn(entity);
         when(transactionMapper.addTransaction(any(Transaction.class))).thenReturn(1L);
         when(transactionMapper.findById(anyLong())).thenReturn(entity);
         when(transactionConverter.entityToResponse(any(Transaction.class))).thenReturn(response);
@@ -244,13 +245,13 @@ public class TransactionServiceTest {
 
     @Test(expected = InvalidCurrencyException.class)
     public void should_addTransaction_InvalidCurrencyException() {
-        final Double balanceAfterTransaction = Double.valueOf(110);
+        final BigDecimal balanceAfterTransaction = BigDecimal.valueOf(110);
         final Long accountId = 1L;
 
         final Transaction entity = Transaction.builder()
                 .id(1L)
                 .accountId(1L)
-                .amount(Double.valueOf(10))
+                .amount(BigDecimal.TEN)
                 .direction(DirectionEnum.IN)
                 .currency(CurrencyEnum.EUR)
                 .balanceAfterTransaction(balanceAfterTransaction)
@@ -259,7 +260,7 @@ public class TransactionServiceTest {
 
         final TransactionRequest request = TransactionRequest.builder()
                 .accountId(1L)
-                .amount(Double.valueOf(10))
+                .amount(BigDecimal.TEN)
                 .direction(DirectionEnum.IN.name())
                 .currency("TRY")
                 .description("hi thats test description")
@@ -268,7 +269,7 @@ public class TransactionServiceTest {
         final TransactionResponse response = TransactionResponse.builder()
                 .transactionId(1L)
                 .accountId(1L)
-                .amount(Double.valueOf(10))
+                .amount(BigDecimal.TEN)
                 .direction(DirectionEnum.IN)
                 .currency(CurrencyEnum.EUR)
                 .balanceAfterTransaction(balanceAfterTransaction)
@@ -277,7 +278,7 @@ public class TransactionServiceTest {
         final Balance balance = Balance.builder()
                 .id(1L)
                 .accountId(1L)
-                .availableAmount(Double.valueOf(150))
+                .availableAmount(BigDecimal.valueOf(150))
                 .currency(CurrencyEnum.EUR)
                 .build();
 
@@ -288,7 +289,7 @@ public class TransactionServiceTest {
 
         when(balanceService.getBalanceByAccountId(anyLong())).thenReturn(balanceList);
         when(balanceService.updateBalance(any(Balance.class))).thenReturn(balance);
-        when(transactionConverter.requestToEntity(any(TransactionRequest.class), any(Balance.class), anyDouble())).thenReturn(entity);
+        when(transactionConverter.requestToEntity(any(TransactionRequest.class), any(Balance.class), any())).thenReturn(entity);
         when(transactionMapper.addTransaction(any(Transaction.class))).thenReturn(1L);
         when(transactionMapper.findById(anyLong())).thenReturn(entity);
         when(transactionConverter.entityToResponse(any(Transaction.class))).thenReturn(response);
@@ -305,12 +306,12 @@ public class TransactionServiceTest {
 
     @Test(expected = InvalidDirectionException.class)
     public void should_addTransaction_InvalidDirectionException() {
-        final Double balanceAfterTransaction = Double.valueOf(110);
+        final BigDecimal balanceAfterTransaction = BigDecimal.valueOf(110);
 
         final Transaction entity = Transaction.builder()
                 .id(1L)
                 .accountId(1L)
-                .amount(Double.valueOf(10))
+                .amount(BigDecimal.TEN)
                 .direction(DirectionEnum.IN)
                 .currency(CurrencyEnum.EUR)
                 .balanceAfterTransaction(balanceAfterTransaction)
@@ -319,7 +320,7 @@ public class TransactionServiceTest {
 
         final TransactionRequest request = TransactionRequest.builder()
                 .accountId(1L)
-                .amount(Double.valueOf(10))
+                .amount(BigDecimal.TEN)
                 .direction("COME")
                 .currency(CurrencyEnum.EUR.name())
                 .description("hi thats test description")
@@ -328,7 +329,7 @@ public class TransactionServiceTest {
         final TransactionResponse response = TransactionResponse.builder()
                 .transactionId(1L)
                 .accountId(1L)
-                .amount(Double.valueOf(10))
+                .amount(BigDecimal.TEN)
                 .direction(DirectionEnum.IN)
                 .currency(CurrencyEnum.EUR)
                 .balanceAfterTransaction(balanceAfterTransaction)
@@ -337,7 +338,7 @@ public class TransactionServiceTest {
         final Balance balance = Balance.builder()
                 .id(1L)
                 .accountId(1L)
-                .availableAmount(Double.valueOf(150))
+                .availableAmount(BigDecimal.valueOf(150))
                 .currency(CurrencyEnum.EUR)
                 .build();
 
@@ -348,7 +349,7 @@ public class TransactionServiceTest {
 
         when(balanceService.getBalanceByAccountId(anyLong())).thenReturn(balanceList);
         when(balanceService.updateBalance(any(Balance.class))).thenReturn(balance);
-        when(transactionConverter.requestToEntity(any(TransactionRequest.class), any(Balance.class), anyDouble())).thenReturn(entity);
+        when(transactionConverter.requestToEntity(any(TransactionRequest.class), any(Balance.class), any())).thenReturn(entity);
         when(transactionMapper.addTransaction(any(Transaction.class))).thenReturn(1L);
         when(transactionMapper.findById(anyLong())).thenReturn(entity);
         when(transactionConverter.entityToResponse(any(Transaction.class))).thenReturn(response);
@@ -365,12 +366,12 @@ public class TransactionServiceTest {
 
     @Test(expected = InvalidAmountException.class)
     public void should_addTransaction_InvalidAmountException() {
-        final Double balanceAfterTransaction = Double.valueOf(110);
+        final BigDecimal balanceAfterTransaction = BigDecimal.valueOf(110);
 
         final Transaction entity = Transaction.builder()
                 .id(1L)
                 .accountId(1L)
-                .amount(Double.valueOf(10))
+                .amount(BigDecimal.TEN)
                 .direction(DirectionEnum.IN)
                 .currency(CurrencyEnum.EUR)
                 .balanceAfterTransaction(balanceAfterTransaction)
@@ -379,7 +380,7 @@ public class TransactionServiceTest {
 
         final TransactionRequest request = TransactionRequest.builder()
                 .accountId(1L)
-                .amount(Double.valueOf(-10))
+                .amount(BigDecimal.valueOf(-10))
                 .direction(DirectionEnum.IN.name())
                 .currency(CurrencyEnum.EUR.name())
                 .description("hi thats test description")
@@ -388,7 +389,7 @@ public class TransactionServiceTest {
         final TransactionResponse response = TransactionResponse.builder()
                 .transactionId(1L)
                 .accountId(1L)
-                .amount(Double.valueOf(10))
+                .amount(BigDecimal.TEN)
                 .direction(DirectionEnum.IN)
                 .currency(CurrencyEnum.EUR)
                 .balanceAfterTransaction(balanceAfterTransaction)
@@ -397,7 +398,7 @@ public class TransactionServiceTest {
         final Balance balance = Balance.builder()
                 .id(1L)
                 .accountId(1L)
-                .availableAmount(Double.valueOf(150))
+                .availableAmount(BigDecimal.valueOf(150))
                 .currency(CurrencyEnum.EUR)
                 .build();
 
@@ -408,7 +409,7 @@ public class TransactionServiceTest {
 
         when(balanceService.getBalanceByAccountId(anyLong())).thenReturn(balanceList);
         when(balanceService.updateBalance(any(Balance.class))).thenReturn(balance);
-        when(transactionConverter.requestToEntity(any(TransactionRequest.class), any(Balance.class), anyDouble())).thenReturn(entity);
+        when(transactionConverter.requestToEntity(any(TransactionRequest.class), any(Balance.class), any())).thenReturn(entity);
         when(transactionMapper.addTransaction(any(Transaction.class))).thenReturn(1L);
         when(transactionMapper.findById(anyLong())).thenReturn(entity);
         when(transactionConverter.entityToResponse(any(Transaction.class))).thenReturn(response);
@@ -425,12 +426,12 @@ public class TransactionServiceTest {
 
     @Test(expected = InsufficientFundsException.class)
     public void should_addTransaction_InsufficientFundsException() {
-        final Double balanceAfterTransaction = Double.valueOf(110);
+        final BigDecimal balanceAfterTransaction = BigDecimal.valueOf(110);
 
         final Transaction entity = Transaction.builder()
                 .id(1L)
                 .accountId(1L)
-                .amount(Double.valueOf(210))
+                .amount(BigDecimal.valueOf(210))
                 .direction(DirectionEnum.IN)
                 .currency(CurrencyEnum.EUR)
                 .balanceAfterTransaction(balanceAfterTransaction)
@@ -439,7 +440,7 @@ public class TransactionServiceTest {
 
         final TransactionRequest request = TransactionRequest.builder()
                 .accountId(1L)
-                .amount(Double.valueOf(210))
+                .amount(BigDecimal.valueOf(210))
                 .direction(DirectionEnum.OUT.name())
                 .currency(CurrencyEnum.EUR.name())
                 .description("hi thats test description")
@@ -448,7 +449,7 @@ public class TransactionServiceTest {
         final TransactionResponse response = TransactionResponse.builder()
                 .transactionId(1L)
                 .accountId(1L)
-                .amount(Double.valueOf(210))
+                .amount(BigDecimal.valueOf(210))
                 .direction(DirectionEnum.OUT)
                 .currency(CurrencyEnum.EUR)
                 .balanceAfterTransaction(balanceAfterTransaction)
@@ -457,7 +458,7 @@ public class TransactionServiceTest {
         final Balance balance = Balance.builder()
                 .id(1L)
                 .accountId(1L)
-                .availableAmount(Double.valueOf(150))
+                .availableAmount(BigDecimal.valueOf(150))
                 .currency(CurrencyEnum.EUR)
                 .build();
 
@@ -468,7 +469,7 @@ public class TransactionServiceTest {
 
         when(balanceService.getBalanceByAccountId(anyLong())).thenReturn(balanceList);
         when(balanceService.updateBalance(any(Balance.class))).thenReturn(balance);
-        when(transactionConverter.requestToEntity(any(TransactionRequest.class), any(Balance.class), anyDouble())).thenReturn(entity);
+        when(transactionConverter.requestToEntity(any(TransactionRequest.class), any(Balance.class), any())).thenReturn(entity);
         when(transactionMapper.addTransaction(any(Transaction.class))).thenReturn(1L);
         when(transactionMapper.findById(anyLong())).thenReturn(entity);
         when(transactionConverter.entityToResponse(any(Transaction.class))).thenReturn(response);

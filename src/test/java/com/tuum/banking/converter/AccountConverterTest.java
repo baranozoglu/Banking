@@ -11,6 +11,7 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class AccountConverterTest {
 
         final List<Balance> balanceList = new ArrayList<>();
         currencyEnumList.forEach(currencyEnum -> {
-            balanceList.add(new Balance(1L, Double.valueOf(0), currencyEnum));
+            balanceList.add(new Balance(1L, BigDecimal.ZERO, currencyEnum));
         });
 
         final AccountRequest request = AccountRequest.builder()
@@ -55,7 +56,7 @@ public class AccountConverterTest {
 
         final List<Balance> balanceList = new ArrayList<>();
         currencyEnumList.forEach(currencyEnum -> {
-            balanceList.add(new Balance(1L, Double.valueOf(0), currencyEnum));
+            balanceList.add(new Balance(1L, BigDecimal.ZERO, currencyEnum));
         });
 
         final Account account = Account.builder()

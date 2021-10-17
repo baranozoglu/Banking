@@ -13,6 +13,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,7 +36,7 @@ public class TransactionControllerTest {
         final TransactionResponse response = TransactionResponse.builder()
                 .transactionId(1L)
                 .accountId(1L)
-                .amount(Double.valueOf(10))
+                .amount(BigDecimal.valueOf(10))
                 .direction(DirectionEnum.IN)
                 .currency(CurrencyEnum.EUR)
                 .description("hi thats test description")
@@ -58,7 +59,7 @@ public class TransactionControllerTest {
     public void should_addTransaction_successfully() throws Exception {
         final TransactionRequest request = TransactionRequest.builder()
                 .accountId(1L)
-                .amount(Double.valueOf(10))
+                .amount(BigDecimal.valueOf(10))
                 .direction(DirectionEnum.IN.name())
                 .currency(CurrencyEnum.EUR.name())
                 .description("hi thats test description")
@@ -68,7 +69,7 @@ public class TransactionControllerTest {
         final TransactionResponse response = TransactionResponse.builder()
                 .transactionId(1L)
                 .accountId(1L)
-                .amount(Double.valueOf(10))
+                .amount(BigDecimal.valueOf(10))
                 .direction(DirectionEnum.IN)
                 .currency(CurrencyEnum.EUR)
                 .description("hi thats test description")

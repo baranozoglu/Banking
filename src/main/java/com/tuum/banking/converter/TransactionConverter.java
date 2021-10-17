@@ -8,6 +8,8 @@ import com.tuum.banking.model.Balance;
 import com.tuum.banking.model.Transaction;
 import org.springframework.stereotype.Component;
 
+import java.math.BigDecimal;
+
 @Component
 public class TransactionConverter {
 
@@ -25,7 +27,7 @@ public class TransactionConverter {
                 .build();
     }
 
-    public Transaction requestToEntity(TransactionRequest request, Balance balance, Double balanceAfterTransaction) {
+    public Transaction requestToEntity(TransactionRequest request, Balance balance, BigDecimal balanceAfterTransaction) {
         return Transaction.builder()
                 .id(request.getId())
                 .accountId(request.getAccountId())

@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -15,7 +16,7 @@ import java.time.LocalDateTime;
 public class Balance {
     private Long id;
     private Long accountId;
-    private Double availableAmount;
+    private BigDecimal availableAmount;
     private CurrencyEnum currency;
     private LocalDateTime updatedAt;
     private LocalDateTime createdAt;
@@ -24,7 +25,7 @@ public class Balance {
         this.id = id;
     }
 
-    public Balance(Long accountId, Double availableAmount, CurrencyEnum currency) {
+    public Balance(Long accountId, BigDecimal availableAmount, CurrencyEnum currency) {
         this.accountId = accountId;
         this.availableAmount = availableAmount;
         this.currency = currency;

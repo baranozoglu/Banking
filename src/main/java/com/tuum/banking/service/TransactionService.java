@@ -18,6 +18,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -56,7 +57,7 @@ public class TransactionService {
         }
         final Balance accountBalance = getBalance(request.getAccountId(), request.getCurrency());
 
-        final Double balanceAfterTransaction = checkBalance(accountBalance, DirectionEnum.of(request.getDirection()), request.getAmount());
+        final BigDecimal balanceAfterTransaction = checkBalance(accountBalance, DirectionEnum.of(request.getDirection()), request.getAmount());
 
         accountBalance.setAvailableAmount(balanceAfterTransaction);
         final Balance balance = balanceService.updateBalance(accountBalance);
@@ -67,25 +68,25 @@ public class TransactionService {
         return transactionConverter.entityToResponse(transaction);
     }
 
-    public Double checkBalance(Balance balance, DirectionEnum direction, Double amount) {
+    public BigDecimal checkBalance(Balance balance, DirectionEnum direction, BigDecimal amount) {
         if(!Objects.nonNull(balance)) {
             throw new NotFoundException();
         }
         if(Objects.equals(direction, DirectionEnum.OTHER)) {
             throw new InvalidDirectionException();
         }
-        if(!Objects.nonNull(amount) || amount < 0) {
+        if(!Objects.nonNull(amount) || amount.compareTo(BigDecimal.ZERO) == -1 ) {
             throw new InvalidAmountException();
         }
-        Double balanceAfterTransaction;
+        BigDecimal balanceAfterTransaction;
         if (Objects.equals(direction, DirectionEnum.IN)) {
-            balanceAfterTransaction = balance.getAvailableAmount() + amount;
+            balanceAfterTransaction = balance.getAvailableAmount().add(amount);
         }
         else {
-            if(balance.getAvailableAmount() < amount) {
+            if(balance.getAvailableAmount().compareTo(amount) == -1) {
                 throw new InsufficientFundsException();
             }
-            balanceAfterTransaction = balance.getAvailableAmount() - amount;
+            balanceAfterTransaction = balance.getAvailableAmount().subtract(amount);
         }
         return balanceAfterTransaction;
     }

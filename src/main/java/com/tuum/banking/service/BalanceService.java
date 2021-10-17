@@ -8,6 +8,7 @@ import com.tuum.banking.model.Balance;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +32,7 @@ public class BalanceService {
         try {
             final List<Balance> balanceList = new ArrayList<>();
             currencyList.forEach(currencyEnum -> {
-                balanceList.add(new Balance(accountLastId + 1, Double.valueOf(0), currencyEnum));
+                balanceList.add(new Balance(accountLastId + 1, BigDecimal.ZERO, currencyEnum));
             });
             return balanceList;
         } catch (Exception e) {

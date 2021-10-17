@@ -11,6 +11,8 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.math.BigDecimal;
+
 import static org.junit.Assert.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -24,7 +26,7 @@ public class TransactionConverterTest {
         final TransactionRequest request = TransactionRequest.builder()
                 .id(1L)
                 .accountId(1L)
-                .amount(Double.valueOf(10))
+                .amount(BigDecimal.TEN)
                 .direction(DirectionEnum.IN.name())
                 .currency(CurrencyEnum.EUR.name())
                 .description("hi thats test description")
@@ -33,11 +35,11 @@ public class TransactionConverterTest {
         final Balance balance = Balance.builder()
                 .id(1L)
                 .accountId(1L)
-                .availableAmount(Double.valueOf(100))
+                .availableAmount(BigDecimal.valueOf(100))
                 .currency(CurrencyEnum.EUR)
                 .build();
 
-        final Double balanceAfterTransaction = Double.valueOf(110);
+        final BigDecimal balanceAfterTransaction = BigDecimal.valueOf(110);
 
         final Transaction transaction = converter.requestToEntity(request, balance, balanceAfterTransaction);
         assertEquals(transaction.getId(), request.getId());
@@ -52,12 +54,12 @@ public class TransactionConverterTest {
 
     @Test
     public void shouldSuccessfullyConvertEntityToResponse() {
-        final Double balanceAfterTransaction = Double.valueOf(110);
+        final BigDecimal balanceAfterTransaction = BigDecimal.valueOf(110);
 
         final Transaction transaction = Transaction.builder()
                 .id(1L)
                 .accountId(1L)
-                .amount(Double.valueOf(10))
+                .amount(BigDecimal.TEN)
                 .direction(DirectionEnum.IN)
                 .currency(CurrencyEnum.EUR)
                 .balanceAfterTransaction(balanceAfterTransaction)
@@ -67,7 +69,7 @@ public class TransactionConverterTest {
         final Balance balance = Balance.builder()
                 .id(1L)
                 .accountId(1L)
-                .availableAmount(Double.valueOf(100))
+                .availableAmount(BigDecimal.valueOf(100))
                 .currency(CurrencyEnum.EUR)
                 .build();
 

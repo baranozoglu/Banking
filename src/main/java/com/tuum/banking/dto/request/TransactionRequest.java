@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -12,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class TransactionRequest {
     private Long id;
     private Long accountId;
-    private Double amount;
+    private BigDecimal amount;
     private String currency;
     private String direction;
     private String description;

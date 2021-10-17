@@ -15,6 +15,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +42,7 @@ public class AccountServiceTest {
 
         final List<Balance> balanceList = new ArrayList<>();
         currencyEnumList.forEach(currencyEnum -> {
-            balanceList.add(new Balance(1L, Double.valueOf(0), currencyEnum));
+            balanceList.add(new Balance(1L, BigDecimal.ZERO, currencyEnum));
         });
 
         final Account entity = Account.builder()
@@ -78,7 +79,7 @@ public class AccountServiceTest {
 
         final List<Balance> balanceList = new ArrayList<>();
         currencyEnumList.forEach(currencyEnum -> {
-            balanceList.add(new Balance(1L, Double.valueOf(0), currencyEnum));
+            balanceList.add(new Balance(1L, BigDecimal.ZERO, currencyEnum));
         });
 
         final AccountResponse response = AccountResponse.builder()
@@ -108,7 +109,7 @@ public class AccountServiceTest {
 
         final List<Balance> balanceList = new ArrayList<>();
         currencyEnumList.forEach(currencyEnum -> {
-            balanceList.add(new Balance(1L, Double.valueOf(0), currencyEnum));
+            balanceList.add(new Balance(1L, BigDecimal.ZERO, currencyEnum));
         });
 
         final Account entity = Account.builder()
@@ -153,7 +154,7 @@ public class AccountServiceTest {
 
         final List<Balance> balanceList = new ArrayList<>();
         currencyEnumList.forEach(currencyEnum -> {
-            balanceList.add(new Balance(1L, Double.valueOf(0), currencyEnum));
+            balanceList.add(new Balance(1L, BigDecimal.ZERO, currencyEnum));
         });
 
         final Account entity = Account.builder()

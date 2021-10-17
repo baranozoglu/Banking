@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Data
@@ -16,11 +17,11 @@ import java.time.LocalDateTime;
 public class Transaction {
     private Long id;
     private Long accountId;
-    private Double amount;
+    private BigDecimal amount;
     private DirectionEnum direction;
     private CurrencyEnum currency;
     private String description;
-    private Double balanceAfterTransaction;
+    private BigDecimal balanceAfterTransaction;
     private LocalDateTime updatedAt;
     private LocalDateTime createdAt;
 

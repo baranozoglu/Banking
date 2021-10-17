@@ -13,6 +13,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class AccountControllerTest {
 
         final List<Balance> balanceList = new ArrayList<>();
         currencyEnumList.forEach(currencyEnum -> {
-            balanceList.add(new Balance(1L, Double.valueOf(0), currencyEnum));
+            balanceList.add(new Balance(1L, BigDecimal.ZERO, currencyEnum));
         });
 
         final AccountResponse response = AccountResponse.builder()
@@ -64,7 +65,7 @@ public class AccountControllerTest {
 
         final List<Balance> balanceList = new ArrayList<>();
         currencyEnumList.forEach(currencyEnum -> {
-            balanceList.add(new Balance(1L, Double.valueOf(0), currencyEnum));
+            balanceList.add(new Balance(1L, BigDecimal.ZERO, currencyEnum));
         });
 
         final AccountRequest request = AccountRequest.builder()
@@ -100,7 +101,7 @@ public class AccountControllerTest {
 
         final List<Balance> balanceList = new ArrayList<>();
         currencyEnumList.forEach(currencyEnum -> {
-            balanceList.add(new Balance(1L, Double.valueOf(0), currencyEnum));
+            balanceList.add(new Balance(1L, BigDecimal.ZERO, currencyEnum));
         });
 
         final AccountRequest request = AccountRequest.builder()
